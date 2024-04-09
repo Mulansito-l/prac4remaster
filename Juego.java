@@ -1,5 +1,13 @@
-public class Juego {
+    
+public class Juego{
     public static void main(String[] args){
-        System.out.println("Ejecutando juego...");
+        // Test para observar todas las cartas
+        Baraja baraja = new Baraja();
+
+        //baraja.mostrarBarajaEnCanvas();
+
+
+        elCinquillo game=new elCinquillo();
+        game.jugarElCinquillo();
     }
 }
