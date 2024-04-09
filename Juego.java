@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Juego{
     public static void main(String[] args){
         // Test para observar todas las cartas
@@ -10,7 +8,7 @@ public class Juego{
         //baraja.mostrarBarajaEnCanvas();
 
 
-        elCinquillo game=new elCinquillo();
+        ElCinquillo game=new ElCinquillo();
         game.jugarElCinquillo();
     }
 }
