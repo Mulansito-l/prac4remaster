@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Baraja {
-    private ArrayList<Carta> BarajaConCartas;
+    private ArrayList<Carta> cartas;
     public Baraja(){
-        BarajaConCartas=new ArrayList<Carta>();
+        cartas =new ArrayList<Carta>();
         llenarBaraja(); //para que se llene en cuanto se crea una baraja
     }
 
@@ -20,13 +20,13 @@ public class Baraja {
                 default -> "Espadas";
             };
             for (int j=1;j<13;j++){ //las cartas de la baraja española van del 1 al 12
-                BarajaConCartas.add(new Carta(j,paloTemp, x + (j * 200), y + (i * 400)));
+                cartas.add(new Carta(j,paloTemp, x + (j * 200), y + (i * 400)));
             }
         }
     }
 
     public Carta getCarta(int posicionDeCarta){
-        return BarajaConCartas.get(posicionDeCarta);
+        return cartas.get(posicionDeCarta);
     }
 
     public ArrayList<Carta> getCartasDeLaBaraja(int cantidadASacar) {
@@ -36,7 +36,7 @@ public class Baraja {
         if ( cantidadASacar <= getSizeBaraja() ) {
             //las agrega a un array que voy a regresar con las cartas sacadas
             for (int i=0; i<cantidadASacar; i++) {
-                cartasSacadas.add(BarajaConCartas.remove(0));
+                cartasSacadas.add(cartas.remove(0));
             }
         } else {
             System.out.println("No hay suficientes cartas en la baraja.");
@@ -47,34 +47,34 @@ public class Baraja {
     }
 
     public void removerCartaDeLaBaraja(int posicionDeLaCarta){
-        BarajaConCartas.remove(posicionDeLaCarta);
+        cartas.remove(posicionDeLaCarta);
     }
 
 
     public int getSizeBaraja(){
-        return BarajaConCartas.size();
+        return cartas.size();
     }
 
     public void barajear(){
-        Collections.shuffle(BarajaConCartas);
+        Collections.shuffle(cartas);
     }
 
     // Metodo temporal para observar todas las cartas
     public void mostrarBarajaEnCanvas(){
-        for(Carta carta : BarajaConCartas){
+        for(Carta carta : cartas){
             carta.mostrarEnCanvas();
         }
     }
     public void mostrarBarajaEnTerminal(){
-        for (Carta carta : BarajaConCartas){
+        for (Carta carta : cartas){
             System.out.println(carta);
         }
     }
     public void remover8sY9s(){
-        for (int i=0;i< BarajaConCartas.size();i++){
+        for (int i = 0; i< cartas.size(); i++){
             if (getCarta(i).getValor()==8 || getCarta(i).getValor()==9){
                 removerCartaDeLaBaraja(i);
-                BarajaConCartas.remove(getCarta(i));
+                cartas.remove(getCarta(i));
                 i-=1;
             }
         }
