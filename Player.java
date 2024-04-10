@@ -38,4 +38,10 @@ public class Player {
         }
 
     }
+
+    public boolean intentarJugarCarta(Tablero tablerin, Carta laCarta){
+        boolean pudoJugarCarta;
+        pudoJugarCarta=tablerin.sePuedeJugarLaCarta(laCarta);
+        return pudoJugarCarta;
+    }
 }

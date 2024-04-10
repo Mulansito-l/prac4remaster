@@ -14,40 +14,112 @@ public class Tablero {
         arrayDeCopas =new ArrayList<Carta>();
     }
 
-    public void agregar5AlCentro() {
-        boolean bandera = false;
-        int j;
-        int sizeManoEnTurno;
-        int valorCarta;
-        String paloCarta;
-        Carta carta;
+    public ArrayList<Carta> getArrayDeBastos() {
+        return arrayDeBastos;
+    }
+    public ArrayList<Carta> getArrayDeCopas() {
+        return arrayDeCopas;
+    }
 
-        for (int i=0; i<players.size(); i++) {
+    public ArrayList<Carta> getArrayDeEspadas() {
+        return arrayDeEspadas;
+    }
+    public ArrayList<Carta> getArrayDeOros() {
+        return arrayDeOros;
+    }
+    public boolean sePuedeJugarLaCarta(Carta laCarta){
+        boolean sePudoJugar=false;
+        if (esUnCinco(laCarta)){
+            sePudoJugar=true;
+        }
 
-            j=0;
-
-            ManoDeCartas mano = players.get(i).getManoDelJugador();
-            sizeManoEnTurno = mano.getSizeDeMano();
-
-            while (!bandera && j< sizeManoEnTurno ) {
-
-                carta = players.get(i).getManoDelJugador().getCartaDeMano(j);
-                valorCarta = carta.getValor();
-                paloCarta = carta.getPalo();
-
-                if ( valorCarta == 5 && (paloCarta.equals("Oros"))) {
-
-                    arrayDeOros.add(carta);
-                    players.get(i).getManoDelJugador().removerCartaDeMano(j);
-                    bandera = true;
-                    turnoActual=players.get(i).getTurno(); //el jugador que tenga el 5 de oros, tendra el primer turno
-                }
-                j++;
+        else if (sePuedeAgregarArriba(laCarta)){
+            sePudoJugar=true;
+        }
+        else if (sePuedeAgregarAbajo(laCarta)){
+            sePudoJugar=true;
+        }
+        return sePudoJugar;
+    }
+    public boolean esUnCinco(Carta laCarta){
+        if (laCarta.getValor()==5){
+            switch (laCarta.getPalo()){
+                case "Bastos":
+                    getArrayDeBastos().add(laCarta);
+                    return true;
+                case "Espadas":
+                    getArrayDeEspadas().add(laCarta);
+                    return true;
+                //Agregar al de copas
+                default:
+                    getArrayDeCopas().add(laCarta);
+                    return true;
             }
+        }
+        else {
+            return false;
         }
     }
 
-    public boolean buscarOtro5() {
+    public boolean sePuedeAgregarArriba(Carta laCarta) {
+        boolean sePudoAgregar=false;
+
+        if (laCarta.getPalo().equals("Oros") && laCarta.getValor() == arrayDeOros.getLast().getValor() + 1) {
+            arrayDeOros.add(laCarta);
+            sePudoAgregar=true;
+
+        }
+
+        else if (!arrayDeBastos.isEmpty()) {
+         if (laCarta.getPalo().equals("Bastos") && laCarta.getValor() == arrayDeBastos.getLast().getValor() + 1) {
+                arrayDeBastos.add(laCarta);
+                sePudoAgregar = true;
+            }
+        }
+        else if (!arrayDeEspadas.isEmpty()) {
+            if (laCarta.getPalo().equals("Espadas") && laCarta.getValor() == arrayDeEspadas.getLast().getValor() + 1) {
+                arrayDeEspadas.add(laCarta);
+                sePudoAgregar = true;
+            }
+        }
+        else if (!arrayDeCopas.isEmpty()) {
+            if (laCarta.getPalo().equals("Copas") && laCarta.getValor() == arrayDeCopas.getLast().getValor() + 1) {
+                arrayDeCopas.add(laCarta);
+                sePudoAgregar = true;
+            }
+        }
+
+        return sePudoAgregar;
+        }
+    public boolean sePuedeAgregarAbajo(Carta laCarta) {
+        boolean sePudoAgregar=false;
+
+        if (laCarta.getPalo().equals("Oros") && laCarta.getValor() == arrayDeOros.getFirst().getValor() - 1) {
+            arrayDeOros.addFirst(laCarta);
+            sePudoAgregar=true;
+        }
+        else if (!arrayDeBastos.isEmpty()) {
+            if (laCarta.getPalo().equals("Bastos") && laCarta.getValor() == arrayDeBastos.getFirst().getValor() - 1) {
+                arrayDeBastos.addFirst(laCarta);
+                sePudoAgregar = true;
+            }
+        }
+        else if (!arrayDeEspadas.isEmpty()) {
+            if (laCarta.getPalo().equals("Espadas") && laCarta.getValor() == arrayDeEspadas.getFirst().getValor() - 1) {
+                arrayDeEspadas.addFirst(laCarta);
+                sePudoAgregar = true;
+            }
+        }
+        else if (!arrayDeCopas.isEmpty()) {
+            if (laCarta.getPalo().equals("Copas") && laCarta.getValor() == arrayDeCopas.getFirst().getValor() - 1) {
+                arrayDeCopas.addFirst(laCarta);
+                sePudoAgregar = true;
+            }
+        }
+        return sePudoAgregar;
+    }
+
+    /*public boolean buscarOtro5() {
         boolean bandera = false;
         Player jugadorActual = players.get(turnoActual);
         ManoDeCartas mano = jugadorActual.getManoDelJugador();
@@ -76,9 +148,9 @@ public class Tablero {
 
         return bandera;
 
-    }
+    }*/
 
-    public boolean ponerCartaAlPrincipio(){
+    /*public boolean ponerCartaAlPrincipio(){
         boolean bandera = false;
         Player jugadorActual = players.get(turnoActual);
         ManoDeCartas mano = jugadorActual.getManoDelJugador();
@@ -182,8 +254,8 @@ public class Tablero {
         return bandera;
 
     }
-
-    public boolean ponerCartaAlFinal(){
+*/
+   /* public boolean ponerCartaAlFinal(){
         boolean bandera = false;
         Player jugadorActual = players.get(turnoActual);
         ManoDeCartas mano = jugadorActual.getManoDelJugador();
@@ -290,10 +362,11 @@ public class Tablero {
 
         return bandera; //regresa true cuando se coloca
     }
-
+*/
     //método para poder buscar si el jugador en turno tiene un 5,
     //sino va a colocar al prinpicio o al final de una escalera
-    public void colocarCarta(){
+
+    /*public void colocarCarta(){
         boolean resultado=false;
         resultado = buscarOtro5();
 
@@ -319,11 +392,5 @@ public class Tablero {
             System.out.println("No pudiste colocar la carta en ningun lado");
         }
 
-    }
-
-
-
-
-
-
+    }*/
 }
