@@ -8,7 +8,7 @@ public class Juego{
         //baraja.mostrarBarajaEnCanvas();
 
 
-        elCinquillo game=new elCinquillo();
-        game.jugarelCinquillo();
+        ElCinquillo game=new ElCinquillo();
+        game.jugarElCinquillo();
     }
 }

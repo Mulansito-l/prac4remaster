@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-public class elCinquillo {
+public class ElCinquillo {
     private int numeroDeJugadores;
     private ArrayList<Player> players;
     private Scanner scanner; 
@@ -9,7 +9,7 @@ public class elCinquillo {
     private int turnoActual;
     private Tablero tableroParajugar;
 
-    public elCinquillo() {
+    public ElCinquillo() {
         players = new ArrayList<Player>();
         scanner = new Scanner(System.in);
         tableroParajugar=new Tablero();
@@ -19,7 +19,7 @@ public class elCinquillo {
 
     }
 
-    public void jugarelCinquillo() {
+    public void jugarElCinquillo() {
         boolean pasa=true;
         generarJugadores();
         barajaParaJugar.remover8sY9s();
