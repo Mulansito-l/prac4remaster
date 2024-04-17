@@ -62,35 +62,53 @@ public class Tablero {
     }
 
     public boolean sePuedeAgregarArriba(Carta laCarta) {
-        boolean sePudoAgregar=false;
+        boolean sePudoAgregar = false;
 
-        if (laCarta.getPalo().equals("Oros") && laCarta.getValor() == arrayDeOros.getLast().getValor() + 1) {
-            arrayDeOros.add(laCarta);
-            sePudoAgregar=true;
+        if (laCarta.getPalo().equals("Oros")) {
+
+            //si la carta es mayor por 1 con respecto al último valor, se coloca
+            if (laCarta.getValor() == arrayDeOros.getLast().getValor() + 1 ||
+                    //si la carta es un 7, se brinca directamente al 10 y se coloca
+                    (arrayDeOros.getLast().getValor() == 7 && laCarta.getValor() == 10)) {
+                arrayDeOros.add(laCarta);
+                sePudoAgregar = true;
+            }
 
         }
 
-        else if (!arrayDeBastos.isEmpty()) {
-         if (laCarta.getPalo().equals("Bastos") && laCarta.getValor() == arrayDeBastos.getLast().getValor() + 1) {
+        else if (!arrayDeBastos.isEmpty() && laCarta.getPalo().equals("Bastos")) {
+
+            if (laCarta.getValor() == arrayDeBastos.getLast().getValor() + 1 ||
+                    (arrayDeBastos.getLast().getValor() == 7 && laCarta.getValor() == 10)) {
                 arrayDeBastos.add(laCarta);
                 sePudoAgregar = true;
             }
+
+
         }
-        else if (!arrayDeEspadas.isEmpty()) {
-            if (laCarta.getPalo().equals("Espadas") && laCarta.getValor() == arrayDeEspadas.getLast().getValor() + 1) {
+        else if (!arrayDeEspadas.isEmpty() && laCarta.getPalo().equals("Espadas")) {
+
+            if (laCarta.getValor() == arrayDeEspadas.getLast().getValor() + 1 ||
+                    (arrayDeEspadas.getLast().getValor() == 7 && laCarta.getValor() == 10)) {
                 arrayDeEspadas.add(laCarta);
                 sePudoAgregar = true;
             }
+
         }
-        else if (!arrayDeCopas.isEmpty()) {
-            if (laCarta.getPalo().equals("Copas") && laCarta.getValor() == arrayDeCopas.getLast().getValor() + 1) {
+
+        else if (!arrayDeCopas.isEmpty() && laCarta.getPalo().equals("Copas")) {
+
+            if (laCarta.getValor() == arrayDeCopas.getLast().getValor() + 1 ||
+                    (arrayDeCopas.getLast().getValor() == 7 && laCarta.getValor() == 10)) {
                 arrayDeCopas.add(laCarta);
                 sePudoAgregar = true;
             }
         }
 
         return sePudoAgregar;
-        }
+    }
+
+
     public boolean sePuedeAgregarAbajo(Carta laCarta) {
         boolean sePudoAgregar=false;
 
