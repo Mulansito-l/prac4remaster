@@ -61,6 +61,8 @@ public class Tablero {
         }
     }
 
+    //método para colocar una carta en su array de palo correspondiente,
+    //tomando en cuenta que este método intenta colocar arriba de la carta central
     public boolean sePuedeAgregarArriba(Carta laCarta) {
         boolean sePudoAgregar = false;
 
