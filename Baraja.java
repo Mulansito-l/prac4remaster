@@ -20,7 +20,9 @@ public class Baraja {
                 default -> "Espadas";
             };
             for (int j=1;j<13;j++){ //las cartas de la baraja española van del 1 al 12
-                cartas.add(new Carta(j,paloTemp, x + (j * 200), y + (i * 400)));
+                Carta temp = new Carta(j,paloTemp, x + (j * 200), y + (i * 400));
+                temp.cambiarTamaño(150);
+                cartas.add(temp);
             }
         }
     }
