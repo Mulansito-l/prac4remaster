@@ -37,7 +37,6 @@ public class Canvas{
     private List<Object> objects;
     private HashMap<Object, Sprite> sprites;
     private ElCinquillo cinquillo;
-    private JLabel saltarLabel;
 
     // Constructor de Canvas, con título, tamaño y color de fondo
     // además se añade un par de Listeners para el uso del cursor
@@ -47,13 +46,11 @@ public class Canvas{
         scrollPane = new JScrollPane(canvasPane);
         objects = new ArrayList<Object>();
         sprites = new HashMap<Object, Sprite>();
-        saltarLabel = new JLabel("Saltar turno");
         frame.setContentPane(scrollPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle(title);
         frame.setLocationRelativeTo(null);
         canvasPane.setPreferredSize(new Dimension(width, height));
-        saltarLabel.setVisible(true);
         backgroundColor = bgColor;
         frame.pack(); 
         setVisible(true);
