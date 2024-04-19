@@ -2,16 +2,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
+// La clase Sprite es una forma simplificada
+// de trabajar con imagenes en el Canvas,
+// la creamos para hacer más fácil el mostrar
+// elementos gráficos
 public class Sprite{
     private int xPosition;
     private int yPosition;
     private BufferedImage image = null;
     private boolean visible;
 
-    // Para crear un sprite simplemente coloca
-    // el nombre de la imagen que se encuentra
-    // en el directorio app/src/main/resources/
-    
+    // Constructor de Sprite, toma la ruta
+    // de la imagen y la intenta cargar
+
     public Sprite(String imageName, int xPosition, int yPosition){
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -35,6 +38,9 @@ public class Sprite{
         return image;
     }
 
+    // Método changeSize, permite escalar la BufferedImage
+    // relacionada con el Sprite, hace uso de una librería
+    // externa para facilitar el escalado de la imagen
     public void changeSize(int maxSizePixels){
         image = Scalr.resize(image,maxSizePixels);
     }

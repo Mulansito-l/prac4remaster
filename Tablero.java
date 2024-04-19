@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+// Clase tablero, es el tablero de un cinquillo
+// cuenta con las escaleras de cada uno de los palos
+// y es posible mostrarse en el Canvas
 public class Tablero {
 
     private ArrayList<Carta> arrayDeOros;
@@ -27,6 +30,8 @@ public class Tablero {
         return arrayDeOros;
     }
 
+    // Método que se encarga de verificar si se puede
+    // colocar una carta en el tablero
     public boolean sePuedeJugarLaCarta(Carta laCarta){
         boolean sePudoJugar=false;
         if (esUnCinco(laCarta)){
@@ -40,6 +45,8 @@ public class Tablero {
         }return sePudoJugar;
     }
 
+    // Método que permite abrir una nueva escalera
+    // si la carta es un cinco de algún palo
     public boolean esUnCinco(Carta laCarta){
         if (laCarta.getValor()==5){
             switch (laCarta.getPalo()){
@@ -110,6 +117,9 @@ public class Tablero {
 
         return sePudoAgregar;
         }
+
+    //método para colocar una carta en su array de palo correspondiente,
+    //tomando en cuenta que este método intenta colocar abajo de la carta central
     public boolean sePuedeAgregarAbajo(Carta laCarta) {
         boolean sePudoAgregar=false;
 
@@ -146,6 +156,8 @@ public class Tablero {
         return sePudoAgregar;
     }
 
+    // Método que se encarga de mostrar las
+    // escaleras en el canvas
     public void mostrarEnCanvas(){
         mostrarArrayEnCanvasEn(arrayDeOros, 300);
         mostrarArrayEnCanvasEn(arrayDeCopas, 700);
@@ -153,6 +165,8 @@ public class Tablero {
         mostrarArrayEnCanvasEn(arrayDeEspadas, 1500);
     }
 
+    // Método que permite mostrar un array de cartas
+    // en una posición en X determinada
     private void mostrarArrayEnCanvasEn(ArrayList<Carta> array,int xPosition){
         int indiceCartaCentral = -1;
         int y = 400;
@@ -161,11 +175,23 @@ public class Tablero {
                 indiceCartaCentral = i;
             }
         }
-            for (Carta carta : array) {
-                carta.setResaltada(false);
-                carta.setPosition(xPosition, y + 50 * indiceCartaCentral);
-                indiceCartaCentral--;
-                carta.mostrarEnCanvas();
-            }
+        for (Carta carta : array) {
+            carta.setResaltada(false);
+            carta.setPosition(xPosition, y + 50 * indiceCartaCentral);
+            indiceCartaCentral--;
+            carta.mostrarEnCanvas();
+        }
+    }
+
+    // Método que se encarga de limpiar completamente el
+    // tablero ocultando las cartas del canvas
+    public void limpiarTablero(){
+        // Aplicación de lambdas para eliminar cada carta rapidamente
+        // y en pocas lineas de codigo
+        arrayDeEspadas.forEach(carta -> Canvas.getCanvas().erase(carta));
+        arrayDeOros.forEach(carta -> Canvas.getCanvas().erase(carta));
+        arrayDeCopas.forEach(carta -> Canvas.getCanvas().erase(carta));
+        arrayDeBastos.forEach(carta -> Canvas.getCanvas().erase(carta));
+        Canvas.getCanvas().redraw();
     }
 }

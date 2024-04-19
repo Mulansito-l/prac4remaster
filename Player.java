@@ -1,12 +1,12 @@
 import java.util.Scanner;
+// Clase jugador se encarga de almacenar
+// datos concernientes al jugador
 public class Player {
     private ManoDeCartas manoDelJugador;
     private int puntuacionTotal;
-    private String estado="noWinner";
     private String nombre;
     public Player(String nombre) {
         this.nombre = nombre;
-        estado = "noWinner";
         manoDelJugador=new ManoDeCartas();
     }
 
@@ -17,30 +17,23 @@ public class Player {
     public ManoDeCartas getManoDelJugador(){
         return manoDelJugador;
     }
-    public Carta getCartaDe(int valor, String palo){
-        return manoDelJugador.getCartaDe(valor, palo);
-    }
+
     public void AgregarAMano(Carta laCarta){
         manoDelJugador.agregarCartaAMano(0,laCarta);
     }
-    public void mostrarMano() {
-        for (int i = 0; i < manoDelJugador.getSizeDeMano(); i++) {
-            System.out.println(manoDelJugador.getCartaDeMano(i));
-            //manoDelJugador.getCartaDeMano(i).mostrarEnCanvas();
-        }
 
-    }
+    // Método que recibe una cantidad puntos y lo añade al jugador actual
     public void añadirPuntuacion(int puntos){
         puntuacionTotal += puntos;
     }
 
-    public int getPuntuacionTotal() {
-        return puntuacionTotal;
+    // Método que limpia la mano del jugador, para añadir
+    // las nuevas cartas
+    public void limpiarMano(){
+        manoDelJugador.limpiar();
     }
 
-    public boolean intentarJugarCarta(Tablero tablerin, Carta laCarta){
-        boolean pudoJugarCarta;
-        pudoJugarCarta=tablerin.sePuedeJugarLaCarta(laCarta);
-        return pudoJugarCarta;
+    public int getPuntuacionTotal() {
+        return puntuacionTotal;
     }
 }

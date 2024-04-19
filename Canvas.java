@@ -6,12 +6,22 @@ import java.awt.event.MouseMotionListener;
 import java.util.List;
 import java.util.*;
 
+// Clase canvas es donde se muestran
+// todos los elementos básicos, está inspirada
+// en aquella que se encuentra en los materiales del
+// BlueJ pero se reescribio para poder mostrar
+// BufferedImages y hacer el canvas scrolleable
 public class Canvas{
+    // Singleton de Canvas ya que solo
+    // debe existir uno en todo momento
     private static Canvas canvas = null; 
 
+    // Método estático que devuelve el
+    // singleton del canvas o crea uno
+    // si no existe todavía
     public static Canvas getCanvas(){
         if(canvas == null){
-            canvas = new Canvas("Canvas",1920,1080, new Color(115,209,159));
+            canvas = new Canvas("El Cinquillo",1920,1080, new Color(115,209,159));
         }
 
         canvas.setVisible(true);
@@ -20,6 +30,7 @@ public class Canvas{
 
     private JFrame frame;
     private CanvasPane canvasPane;
+    private JScrollPane scrollPane;
     private Graphics2D graphic;
     private Color backgroundColor;
     private Image canvasImage;
@@ -28,22 +39,20 @@ public class Canvas{
     private ElCinquillo cinquillo;
     private JLabel saltarLabel;
 
+    // Constructor de Canvas, con título, tamaño y color de fondo
+    // además se añade un par de Listeners para el uso del cursor
     public Canvas(String title, int width, int height, Color bgColor){
         frame = new JFrame();
         canvasPane = new CanvasPane();
+        scrollPane = new JScrollPane(canvasPane);
         objects = new ArrayList<Object>();
         sprites = new HashMap<Object, Sprite>();
         saltarLabel = new JLabel("Saltar turno");
-        frame.setContentPane(canvasPane);
+        frame.setContentPane(scrollPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle(title);
         frame.setLocationRelativeTo(null);
         canvasPane.setPreferredSize(new Dimension(width, height));
-        saltarLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        saltarLabel.setForeground(Color.BLUE);
-        saltarLabel.setBackground(Color.LIGHT_GRAY);
-        saltarLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        canvasPane.add(saltarLabel);
         saltarLabel.setVisible(true);
         backgroundColor = bgColor;
         frame.pack(); 
@@ -52,6 +61,7 @@ public class Canvas{
         canvasPane.addMouseMotionListener(canvasPane);
     }
 
+    // Método que muestra la ventana del Canvas
     public void setVisible(boolean visible){
         if(graphic == null) {
             // first time: instantiate the offscreen image and fill it with
@@ -70,37 +80,51 @@ public class Canvas{
         this.cinquillo = cinquillo;
     }
 
-    // Utilizar esta función para dibujar
-    // objetos, mandar la referencia al objeto
-    // y el sprite con el que se quiere dibujar
+    // Método que se encarga de añadir un objeto al
+    // HashMap de objetos dibujables, relaciona un objeto
+    // con un Sprite y cada vez que se intenta dibujar el
+    // objeto en el Canvas se dibuja el Sprite relacionado
+    // con el objeto.
     public void draw(Object objectReference, Sprite sprite){
         objects.remove(objectReference);
         objects.add(objectReference);
         sprites.put(objectReference, sprite);
     }
 
-    // Para borrar un objecto simplemente
-    // pasa la referencia al objeto
+    // Método que elimina el objeto dado del HashMap de objetos
+    // a dibujar
     public void erase(Object objectReference){
         objects.remove(objectReference);
         canvasPane.repaint();
     }
 
+    // Método que se encarga de actualizar el Canvas
     public void redraw(){
         canvasPane.repaint();
     }
 
+    // Extensión del JPanel para que funcione como un Canvas, implementa algunos
+    // Listeners para tener eventos con el cursor, dibuja el fondo siempre y
+    // posteriormente itera sobre todo el hashmap y dibuja todos los objetos
+    // que tienen un Sprite visible, al clickear o mover el mouse se pasan
+    // las coordenadas del cursor a un método del cinquillo para realizar
+    // la interacción.
     private class CanvasPane extends JPanel implements MouseListener, MouseMotionListener {
         public void paint(Graphics g)
         {
             super.paint(g);
             g.drawImage(canvasImage, 0, 0, null);
-            for(Object object : objects){
-                Sprite objectSprite = sprites.get(object);
-                if(objectSprite != null && objectSprite.isVisible()){
-                    g.drawImage(objectSprite.getImage(), objectSprite.getXPosition(),objectSprite.getYPosition(),null);
-                }
-            }
+
+            // Aplicación de Lambda en la que se filtran los objetos que tienen
+            // tienen sprite y son visibles para dibujarlos posteriormente
+            objects.stream().filter(
+                    object -> sprites.get(object) != null && sprites.get(object).isVisible()
+            ).forEach(
+                    object ->{
+                        Sprite objectSprite = sprites.get(object);
+                        g.drawImage(objectSprite.getImage(), objectSprite.getXPosition(),objectSprite.getYPosition(),null);
+                    }
+            );
         }
 
         public void mousePressed(MouseEvent e) {

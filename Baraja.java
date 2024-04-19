@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
+// Esta clase es la representación de la
+// baraja española con todas sus cartas
 public class Baraja {
     private ArrayList<Carta> cartas;
     public Baraja(){
@@ -8,6 +11,10 @@ public class Baraja {
         llenarBaraja(); //para que se llene en cuanto se crea una baraja
     }
 
+
+    // Se encarga de llenar la baraja
+    // con cada una de las correspondientes
+    // cartas de una baraja española
     public void llenarBaraja() {
         int x = 0;
         int y = 0;
@@ -27,58 +34,33 @@ public class Baraja {
         }
     }
 
+    // Regrese la carta en una posición especifica
     public Carta getCarta(int posicionDeCarta){
         return cartas.get(posicionDeCarta);
     }
 
-    public ArrayList<Carta> getCartasDeLaBaraja(int cantidadASacar) {
-        ArrayList<Carta> cartasSacadas = new ArrayList<>();
-
-        //solo saca cartas si existe esa cantidad disponible
-        if ( cantidadASacar <= getSizeBaraja() ) {
-            //las agrega a un array que voy a regresar con las cartas sacadas
-            for (int i=0; i<cantidadASacar; i++) {
-                cartasSacadas.add(cartas.remove(0));
-            }
-        } else {
-            System.out.println("No hay suficientes cartas en la baraja.");
-            return null;
-        }
-
-        return cartasSacadas;
-    }
-
+    // Método que elimina la carta en la posición especificada
     public void removerCartaDeLaBaraja(int posicionDeLaCarta){
         cartas.remove(posicionDeLaCarta);
     }
-
 
     public int getSizeBaraja(){
         return cartas.size();
     }
 
+    // Método que mezcla la baraja
     public void barajear(){
         Collections.shuffle(cartas);
     }
 
-    // Metodo temporal para observar todas las cartas
-    public void mostrarBarajaEnCanvas(){
-        for(Carta carta : cartas){
-            carta.mostrarEnCanvas();
-        }
-    }
-    public void mostrarBarajaEnTerminal(){
-        for (Carta carta : cartas){
-            System.out.println(carta);
-        }
-    }
+
+    // Método que se encarga de eliminar los 8s y 9s para
+    // una partida de ElCinquillo
     public void remover8sY9s(){
-        for (int i = 0; i< cartas.size(); i++){
-            if (getCarta(i).getValor()==8 || getCarta(i).getValor()==9){
-                removerCartaDeLaBaraja(i);
-                cartas.remove(getCarta(i));
-                i-=1;
-            }
-        }
+        // Implementación de lambda que filtra aquellas cartas que
+        // no sean del valor 8 o 9
+        cartas = cartas.stream()
+                .filter(carta -> carta.getValor() != 8 && carta.getValor() != 9)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

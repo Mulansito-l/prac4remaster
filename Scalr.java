@@ -36,6 +36,8 @@ import java.awt.image.RescaleOp;
 
 import javax.imageio.ImageIO;
 
+// LIBRERIA EXTERNA QUE SIRVE PARA ESCALAR IMAGENES
+
 /**
  * Class used to implement performant, high-quality and intelligent image
  * scaling and manipulation algorithms in native Java 2D.

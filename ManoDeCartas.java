@@ -22,6 +22,8 @@ public class ManoDeCartas {
         return sizeDeMano;
     }
 
+    // Método que busca la carta de un valor y palo
+    // y la regresa
     public Carta getCartaDe(int valor, String palo){
         for (Carta cartita:mano){
             if (cartita.getValor() == valor && cartita.getPalo().equals(palo) ){
@@ -29,6 +31,16 @@ public class ManoDeCartas {
             }
         }
         return null;
+    }
+
+    public ArrayList<Carta> getMano(){
+        return mano;
+    }
+
+    // Método que limpia la mano, es decir borra todas las
+    // cartas restantes
+    public void limpiar(){
+        mano.clear();
     }
 
     public Carta getCartaDeMano(int posicionDeCarta){
