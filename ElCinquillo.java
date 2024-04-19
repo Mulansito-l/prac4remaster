@@ -217,7 +217,7 @@ public class ElCinquillo {
     // Método que muestra un menú de selección de número de jugadores
     // y permite ingresar nombres para cada uno de ellos
     private void generarJugadores() {
-        String[] opciones = {"2 jugadores", "3 jugadores", "4 jugadores", "5 jugadores", "6 jugadores"};
+        String[] opciones = {"2 jugadores", "3 jugadores", "4 jugadores", "5 jugadores"};
         int opcionSeleccionada = JOptionPane.showOptionDialog(null,"Seleccione la cantidad de jugadores: ", "Selección de Jugadores", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,null, opciones, opciones[0]);
         System.out.println(opcionSeleccionada);
         switch (opcionSeleccionada){
@@ -360,9 +360,12 @@ public class ElCinquillo {
                 valorCarta = carta.getValor();
                 paloCarta = carta.getPalo();
                 if ( valorCarta == 5 && (paloCarta.equals("Oros"))) {
-
                     tableroParajugar.getArrayDeOros().add(carta);
                     players.get(i).getManoDelJugador().removerCartaDeMano(j);
+                    if (numeroDeJugadores == 3){
+                        Carta cartaSobrante = barajaParaJugar.getCarta(0);
+                        players.get(i).getManoDelJugador().agregarCartaAMano(0,cartaSobrante);
+                    }
                     bandera = true;
                     turnoActual=i; //el jugador que tenga el 5 de oros, tendra el primer turno
                     System.out.println(players.get(i).getNombre() + " colocó el 5 de oros");
