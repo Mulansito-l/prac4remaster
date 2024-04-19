@@ -194,9 +194,9 @@ public class ElCinquillo {
             if (cartaMasCercana == cartaPasarTurno){
                 String[] opciones = {"Si", "No"};
                 int op = JOptionPane.showOptionDialog(null,"Está seguro que desea pasar turno?", "Pasar turno",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,opciones,opciones[0]);
-                System.out.println(op);
-                seleccionadoCarta = true;
-                System.out.println(players.get(turnoActual) + " ha saltado turno");
+                if (op == 0){
+                    seleccionadoCarta = true;
+                }
             }
         }
         tableroParajugar.mostrarEnCanvas();
@@ -205,6 +205,7 @@ public class ElCinquillo {
 
     // Método que se encarga de girar entre los turnos
     private void pasarTurno(){
+        ocultarManoTurnoActualEnCanvas();
         JOptionPane.showMessageDialog(null,"Se acabó el turno de " + players.get(turnoActual).getNombre());
         seleccionadoCarta = true;
         if (turnoActual == numeroDeJugadores - 1)
@@ -369,6 +370,8 @@ public class ElCinquillo {
                     bandera = true;
                     turnoActual=i; //el jugador que tenga el 5 de oros, tendra el primer turno
                     System.out.println(players.get(i).getNombre() + " colocó el 5 de oros");
+                    tableroParajugar.mostrarEnCanvas();
+                    Canvas.getCanvas().redraw();
                     JOptionPane.showMessageDialog(null, players.get(i).getNombre() + " colocó el 5 de oros");
                     pasarTurno();
                 }

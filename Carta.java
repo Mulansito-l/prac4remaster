@@ -106,6 +106,7 @@ public class Carta {
     public void ocultarEnCanvas(){
         image.setVisible(false);
         esVisible = false;
+        Canvas.getCanvas().redraw();
     }
 
     public String toString() {
